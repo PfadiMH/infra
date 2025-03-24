@@ -1,0 +1,56 @@
+version: "3.7"
+
+services:
+  keycloak:
+    container_name: keycloak-app
+    image: quay.io/keycloak/keycloak:latest
+    restart: always
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_USER}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_PASSWORD}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak
+      KC_DB_USERNAME: ${POSTGRES_USER}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      KC_HOSTNAME: ${KEYCLOAK_URL}
+      KC_HTTP_ENABLED: "true"
+      KC_PROXY_HEADERS: "xforwarded"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7080/health/ready"]
+      interval: 15s
+      timeout: 2s
+      retries: 15
+    volumes:
+      - ../files/keycloak-app/data:/opt/keycloak/data
+    depends_on:
+      - keycloak-db
+    networks:
+      - keycloak-net
+    command:
+      - "start"
+
+  keycloak-db:
+    container_name: keycloak-db
+    image: postgres:latest
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: pg_isready -U $$POSTGRES_USER -d keycloak
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
+    volumes:
+      - ../files/keycloak-db/data:/var/lib/postgresql/data
+    networks:
+      - keycloak-net
+
+networks:
+  keycloak-net:
+    name: keycloak-net
+    driver: bridge
