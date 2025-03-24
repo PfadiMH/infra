@@ -11,19 +11,14 @@ services:
       KC_DB_USERNAME: ${POSTGRES_USER}
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
       KC_HOSTNAME: ${KEYCLOAK_HOST}
-      KC_HTTP_ENABLED: "true"
-      KC_PROXY_HEADERS: "xforwarded"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:7080/health/ready"]
-      interval: 15s
-      timeout: 2s
-      retries: 15
+      KC_HTTP_ENABLED: true
+      KC_PROXY_HEADERS: xforwarded
     depends_on:
       - keycloak-db
     networks:
       - keycloak-net
     command:
-      - "start"
+      - start
 
   keycloak-db:
     container_name: keycloak-db
