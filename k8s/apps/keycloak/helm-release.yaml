@@ -22,9 +22,12 @@ spec:
       port: 5432
       database: app_db
       user: app_user
-      password: "" # This will be populated by the CNPG operator
+      password: ""
       existingSecret: postgres-app-credentials
       existingSecretNamespace: databases
     secrets:
       existingSecret: true
+    envFrom:
+      - secretRef:
+          name: keycloak-db-password
   timeout: 10m
