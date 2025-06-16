@@ -2,7 +2,7 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: postgres-db-main
-  namespace: default
+  namespace: databases
 spec:
   instances: 3
   primaryUpdateStrategy: unsupervised
