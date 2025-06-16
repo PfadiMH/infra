@@ -1,0 +1,26 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: keycloak
+  namespace: core
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: keycloak
+      version: "24.7.4"
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+  targetNamespace: core
+  values:
+    postgresql:
+      enabled: false
+    externalDatabase:
+      host: postgres-db-main-rw.databases.svc.cluster.local
+      port: 5432
+      database: app_db
+      user: app_user
+      password: "" # This will be populated by the CNPG operator
+      existingSecret: postgres-app-credentials
