@@ -25,3 +25,5 @@ spec:
       password: "" # This will be populated by the CNPG operator
       existingSecret: postgres-app-credentials
       existingSecretNamespace: databases
+    secrets:
+      existingSecret: true
