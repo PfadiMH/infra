@@ -6,3 +6,4 @@ resources:
   - keycloak-app-ctl.yaml
   - operators-ctl.yaml
   - helm-repositories-ctl.yaml
+  - traefik-controller.yaml
