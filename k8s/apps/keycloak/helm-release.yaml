@@ -22,9 +22,5 @@ spec:
       port: 5432
       database: app_db
       user: app_user
-      password: ""
-      existingSecret: postgres-app-credentials
-      existingSecretNamespace: databases
-    secrets:
-      existingSecret: true
+      password: "insecurepassword"
   timeout: 10m
