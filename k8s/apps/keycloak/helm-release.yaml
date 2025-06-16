@@ -13,7 +13,6 @@ spec:
         kind: HelmRepository
         name: bitnami
         namespace: flux-system
-      type: oci
   targetNamespace: core
   values:
     postgresql:
