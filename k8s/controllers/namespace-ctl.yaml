@@ -4,7 +4,7 @@ metadata:
   name: namespace-ctl
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1m # 10m
   path: ./k8s/infra/namespaces
   prune: true
   sourceRef:
