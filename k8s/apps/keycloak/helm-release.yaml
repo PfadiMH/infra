@@ -27,3 +27,4 @@ spec:
       existingSecretNamespace: databases
     secrets:
       existingSecret: true
+  timeout: 10m
