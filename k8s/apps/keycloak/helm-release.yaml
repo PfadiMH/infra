@@ -27,7 +27,4 @@ spec:
       existingSecretNamespace: databases
     secrets:
       existingSecret: true
-    envFrom:
-      - secretRef:
-          name: keycloak-db-password
   timeout: 10m
